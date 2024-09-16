@@ -1,0 +1,23 @@
+<div class="main-container">
+  <div class="container d-flex flex-column justify-content-center align-items-center mt-5">
+    <div class="mb-3 w-50">
+      <label for="establishment-select">Select an establishment:</label>
+      <select id="establishment-select" class="form-select form-select-lg" [(ngModel)]="selectedEstablishment">
+        <option *ngFor="let establishment of establishments" [value]="establishment.id">
+          {{ establishment.name }}
+        </option>
+      </select>
+    </div>
+
+    <div class="w-50">
+      <label for="vehicle-plate">Enter the vehicle's license plate:</label>
+      <input type="text" id="vehicle-plate" class="form-control form-control-lg" placeholder="Ex: ABC-1234" [(ngModel)]="vehiclePlate">
+    </div>
+
+    <div class="d-flex justify-content-center w-50 mt-3">
+      <button class="btn btn-primary btn-lg me-3" (click)="registerEntry()">Register Entry</button>
+      <button class="btn btn-danger btn-lg me-3" (click)="registerExit()">Register Output</button>
+    </div>
+
+  </div>
+</div>

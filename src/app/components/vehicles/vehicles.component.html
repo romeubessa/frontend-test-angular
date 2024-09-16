@@ -1,0 +1,95 @@
+<div class="main-container">
+  <div class="container">
+      <button type="button" class="btn btn-primary m-3" (click)="openCreate()">Create Vehicle</button>
+
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+          <ng-container matColumnDef="brand">
+          <th mat-header-cell *matHeaderCellDef> Brand </th>
+          <td mat-cell *matCellDef="let element"> {{element.brand}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="model">
+          <th mat-header-cell *matHeaderCellDef> Model </th>
+          <td mat-cell *matCellDef="let element"> {{element.model}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="color">
+          <th mat-header-cell *matHeaderCellDef> Color </th>
+          <td mat-cell *matCellDef="let element"> {{element.color}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="plate">
+          <th mat-header-cell *matHeaderCellDef> Plate </th>
+          <td mat-cell *matCellDef="let element"> {{element.plate}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef> Type </th>
+          <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="options">
+          <th mat-header-cell *matHeaderCellDef> Options </th>
+          <td mat-cell *matCellDef="let element">
+              <button type="button" class="btn btn-primary m-2" (click)="onEdit(element)">Edit</button>
+              <button type="button" class="btn btn-danger" (click)="openConfirmDeleteModal(element, confirmDelete)">Delete</button>
+          </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+  </div>
+</div>
+
+<ng-template #createVehicle let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">New Vehicle</h4>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="vehicleForm">
+      <div class="mb-3">
+        <label for="vehicleBrand" class="form-label">Brand</label>
+        <input type="text" class="form-control" id="vehicleBrand" formControlName="brand" required>
+      </div>
+      <div class="mb-3">
+        <label for="vehicleModel" class="form-label">Model</label>
+        <input type="text" class="form-control" id="vehicleModel" formControlName="model" required>
+      </div>
+      <div class="mb-3">
+        <label for="vehicleColor" class="form-label">Color</label>
+        <input type="text" class="form-control" id="vehicleColor" formControlName="color" required>
+      </div>
+      <div class="mb-3">
+        <label for="vehiclePlate" class="form-label">Plate</label>
+        <input type="text" class="form-control" id="vehiclePlate" formControlName="plate" required>
+      </div>
+      <div class="mb-3">
+        <label for="vehicleType" class="form-label">Type</label>
+        <select id="vehicleType-select" class="form-select form-select-lg" formControlName="type">
+          <option *ngFor="let type of types" [value]="type">
+            {{ type }}
+          </option>
+        </select>
+      </div>
+      <div style="display: flex; justify-content: space-between;">
+          <button type="submit" class="btn btn-primary" (click)="onSubmit()">{{ isEdit ? 'Save' : 'Create' }}</button>
+          <button type="submit" class="btn btn-secondary" (click)="closeModal()">Close</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #confirmDelete let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Confirm Delete</h4>
+  </div>
+  <div class="modal-body">
+    <p>Are you sure you want to delete this Vehicle?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel')">Cancel</button>
+    <button type="button" class="btn btn-danger" (click)="deleteConfirmed()">Delete</button>
+  </div>
+</ng-template>
